@@ -1,24 +1,40 @@
-- [Benefits of Airflow](#2--benefits-of-airflow)
-    - [Dynamic](#21--dynamic)
-    - [Flexibility and Scalability](#22--flexibility-and-scalability)
-    - [Fully Functional User Interface](#23--fully-functional-user-interface)
-- [Airflow Components](#3--airflow-components)
-    - [The Web Server](#31--the-web-server)
-    - [The Scheduler](#32--the-scheduler)
-    - [Meta Database](#33--meta-database)
-    - [The Triggerer](#34--the-triggerer)
-    - [The Executor](#35--the-executor)
-    - [The Queue](#36--the-queue)
-    - [The Worker](#37--the-worker)
-- [Airflow Core Concepts](#4--airflow-core-concepts)
-    - [The DAG (Directed Acyclic Graph)](#41--the-dag-directed-acyclic-graph)
-    - [Operator](#42--operator)
-    - [Tasks / Task Instances](#43--tasks--task-instances)
-    - [Workflow](#44--workflow)
-- [Different Architectures](#5--different-architectures)
-    - [Single Node Architecture](#51--single-node-architecture)
-    - [Multi Node Architecture](#52--multi-node-architecture)
-- [DAG Execution Flow](#6--dag-execution-flow)
+# Table of Contents
+1. [Benefits of Airflow](#1--benefits-of-airflow)
+    1.1. [Dynamic](#11--dynamic)
+    1.2. [Flexibility and Scalability](#12--flexibility-and-scalability)
+    1.3. [Fully Functional User Interface](#13--fully-functional-user-interface)
+2. [Airflow Components](#2--airflow-components)
+    2.1. [The Web Server](#21--the-web-server)
+    2.2. [The Scheduler](#22--the-scheduler)
+    2.3. [Meta Database](#23--meta-database)
+    2.4. [The Triggerer](#24--the-triggerer)
+    2.5. [The Executor](#25--the-executor)
+        2.5.1. [Types of Executors](#251--types-of-executors)
+            2.5.1.1. [Sequential Executor](#2511--sequential-executor)
+            2.5.1.2. [Local Executor](#2512--local-executor)
+            2.5.1.3. [Celery Executor](#2513--celery-executor)
+    2.6. [The Queue](#26--the-queue)
+    2.7. [The Worker](#27--the-worker)
+3. [Airflow Core Concepts](#3--airflow-core-concepts)
+    3.1. [The DAG (Directed Acyclic Graph)](#31--the-dag-directed-acyclic-graph)
+    3.2. [Operator](#32--operator)
+        3.2.1. [Types of Operators](#321--types-of-operators)
+        3.2.2. [Best Practices for Operators](#322--best-practices-for-operators)
+    3.3. [Tasks / Task Instances](#33--tasks--task-instances)
+    3.4. [Workflow](#34--workflow)
+4. [Different Architectures](#4--different-architectures)
+    4.1. [Single Node Architecture](#41--single-node-architecture)
+    4.2. [Multi Node Architecture](#42--multi-node-architecture)
+5. [DAG Execution Flow](#5--dag-execution-flow)
+6. [DAG Skeleton](#6--dag-skeleton)
+    6.1. [Basic DAG Code](#61--basic-dag-code)
+    6.2. [Creating a RDBMS Table](#62--creating-a-rdbms-table)
+    6.3. [Checking for API Availability](#63--checking-for-api-availability)
+    6.4. [Extract and Process Users](#64--extract-and-process-users)
+7. [Hooks](#7--hooks)
+8. [Datasets](#8--datasets)
+    8.1. [URI](#81--uri)
+    8.2. [Extra](#82--extra)
 ## 1- What is Airflow.
 - Am open source tool to programmatically author, schedule and monitor workflows. 
 - it like a very smart to-do list for your workflow that runs itself.
@@ -113,7 +129,7 @@ Provides a user interface when you use airflow.
 -  A node is a single computer or server.
 ### 5.1- Single Node Architecture
 - A single node architectures means all components of airflow are running on one machine.
-  ![](https://i.imgur.com/785QliE.png
+![](https://i.imgur.com/UY0JmrS.png)
 #### Why use single node 
 - Greta to get started or small workflows.
 - SImple to setup and manage.
@@ -352,7 +368,7 @@ not_ascii = Dataset("file_dàtaset")
 from airflow import Dataset
 
 my_file = Dataset(
-						"s3://dataset/file.csv,
-						extra = {'owner : 'zyad}",
+					"s3://dataset/file.csv,
+					extra = {'owner : 'zyad}",
 )				 
 ```
